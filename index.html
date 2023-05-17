@@ -2,37 +2,10 @@
 <html>
   <head>
     <title>Meine Website</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-      // JavaScript-Code für den Seitenrouter
-      $(document).ready(function () {
-        // Verstecke alle Seiten außer der Startseite
-        $('.page').hide();
-        $('#home').show();
-
-        // Navigationsfunktion
-        function navigateTo(pageId) {
-          $('.page').hide();
-          $('#' + pageId).show();
-        }
-
-        // Klickevents für die Navigation
-        $('#homeLink').click(function () {
-          navigateTo('home');
-        });
-
-        $('#registerLink').click(function () {
-          navigateTo('register');
-        });
-
-        $('#loginLink').click(function () {
-          navigateTo('login');
-        });
-      });
-    </script>
   </head>
-  <body>
-    <!-- Navigation -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="cssClasses.css" />
+  <body class="body">
     <nav>
       <ul>
         <li><a id="homeLink" href="#">Home</a></li>
@@ -41,38 +14,44 @@
       </ul>
     </nav>
 
-    <!-- Home-Seite -->
-    <div id="home" class="page">
-      <h1>Willkommen auf der Home-Seite!</h1>
-      <!-- Füge hier den Inhalt deiner Home-Seite ein -->
+    <div id="pageContainer">
+      <!--Home-->
+      <div id="home" class="page">
+        <div class="d-flex w100p f-jb">
+          <h1>Willkommen auf der Home-Seite!</h1>
+          <h1>Test</h1>
+        </div>
+      </div>
+
+      <!--Regristierung-->
+      <div id="register" class="page">
+        <h2>Registrieren</h2>
+        <form>
+          <label for="username">Benutzername:</label>
+          <input type="text" id="username-reg" name="username" required />
+
+          <label for="password">Passwort:</label>
+          <input type="password" id="password-reg" name="password" required />
+
+          <input type="submit" value="Registrieren" />
+        </form>
+      </div>
+
+      <!--Login-->
+      <div id="login" class="page">
+        <h2>Login</h2>
+        <form>
+          <label for="username">Benutzername:</label>
+          <input type="text" id="username-log" name="username" required />
+
+          <label for="password">Passwort:</label>
+          <input type="password" id="password-log" name="password" required />
+
+          <input type="submit" value="Einloggen" />
+        </form>
+      </div>
     </div>
-
-    <!-- Registrierungsseite -->
-    <div id="register" class="page">
-      <h2>Registrieren</h2>
-      <form>
-        <label for="username">Benutzername:</label>
-        <input type="text" id="username" name="username" required />
-
-        <label for="password">Passwort:</label>
-        <input type="password" id="password" name="password" required />
-
-        <input type="submit" value="Registrieren" />
-      </form>
-    </div>
-
-    <!-- Login-Seite -->
-    <div id="login" class="page">
-      <h2>Login</h2>
-      <form>
-        <label for="username">Benutzername:</label>
-        <input type="text" id="username" name="username" required />
-
-        <label for="password">Passwort:</label>
-        <input type="password" id="password" name="password" required />
-
-        <input type="submit" value="Einloggen" />
-      </form>
-    </div>
+    <script src="navigate.js" type="module"></script>
+    <script src="app.js" type="module"></script>
   </body>
 </html>
