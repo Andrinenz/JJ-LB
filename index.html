@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Meine Website</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      // JavaScript-Code für den Seitenrouter
+      $(document).ready(function () {
+        // Verstecke alle Seiten außer der Startseite
+        $('.page').hide();
+        $('#home').show();
+
+        // Navigationsfunktion
+        function navigateTo(pageId) {
+          $('.page').hide();
+          $('#' + pageId).show();
+        }
+
+        // Klickevents für die Navigation
+        $('#homeLink').click(function () {
+          navigateTo('home');
+        });
+
+        $('#registerLink').click(function () {
+          navigateTo('register');
+        });
+
+        $('#loginLink').click(function () {
+          navigateTo('login');
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <ul>
+        <li><a id="homeLink" href="#">Home</a></li>
+        <li><a id="registerLink" href="#">Registrieren</a></li>
+        <li><a id="loginLink" href="#">Einloggen</a></li>
+      </ul>
+    </nav>
+
+    <!-- Home-Seite -->
+    <div id="home" class="page">
+      <h1>Willkommen auf der Home-Seite!</h1>
+      <!-- Füge hier den Inhalt deiner Home-Seite ein -->
+    </div>
+
+    <!-- Registrierungsseite -->
+    <div id="register" class="page">
+      <h2>Registrieren</h2>
+      <form>
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required />
+
+        <input type="submit" value="Registrieren" />
+      </form>
+    </div>
+
+    <!-- Login-Seite -->
+    <div id="login" class="page">
+      <h2>Login</h2>
+      <form>
+        <label for="username">Benutzername:</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required />
+
+        <input type="submit" value="Einloggen" />
+      </form>
+    </div>
+  </body>
+</html>
