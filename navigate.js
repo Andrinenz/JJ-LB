@@ -17,35 +17,49 @@ export const navigateTo = (pageId) => {
   }
 };
 
+const clearPlans = () => {
+  let tables = document.getElementsByClassName('stundenplan-table');
+  for (let i = 0; i < tables.length; i++) {
+    tables[i].closest('.klasse').style.display = 'none';
+  }
+};
+
 document.getElementById('homeLink').addEventListener('click', (e) => {
   e.preventDefault();
+  clearPlans();
   navigateTo('home');
 });
 document.getElementById('contentLink').addEventListener('click', (e) => {
   e.preventDefault();
   const loggedIn = localStorage.getItem('is_logged_in');
   if (loggedIn === 'true') {
+    clearPlans();
     navigateTo('content');
   } else {
+    clearPlans();
     navigateTo('home');
   }
 });
 
 document.getElementById('registerLink').addEventListener('click', (e) => {
   e.preventDefault();
+  clearPlans();
   navigateTo('register');
 });
 
 document.getElementById('loginLink').addEventListener('click', (e) => {
   e.preventDefault();
+  clearPlans();
   navigateTo('login');
 });
 
 window.addEventListener('load', () => {
   const loggedIn = localStorage.getItem('is_logged_in');
   if (loggedIn === 'true') {
+    clearPlans();
     navigateTo('content');
   } else {
+    clearPlans();
     navigateTo('home');
   }
 });

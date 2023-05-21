@@ -2,15 +2,33 @@
 <html>
   <head>
     <title>Stundeplan - LB291</title>
+    <script
+      src="https://kit.fontawesome.com/02c8da43ce.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   </head>
   <link rel="stylesheet" href="public/cssClasses.css" />
   <link rel="stylesheet" href="public/styles.css" />
   <body class="body">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/jasmine-html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/3.10.0/boot.min.js"></script>
+
+    <script src="/Tests/jasmineConf.js"></script>
+    <script src="Tests/test.js"></script>
+
     <div class="header">
-      <a class="logo" id="homeLink" href="#"> Logo </a>
+      <a class="logo" id="homeLink" href="#"><i class="fas fa-cloud"></i></a>
       <a class="title-home text-bold" href="#">Stundeplan viewer</a>
       <div class="header-right">
-        <a id="contentLink" href="#">Home</a>
+        <a id="contentLink" href="#">Stundenplan</a>
         <a id="loginLink" href="#">Login</a>
         <a id="registerLink" href="#">Registrieren</a>
       </div>
@@ -23,41 +41,77 @@
           <div class="ml-6 pt-3">
             <h1>Willkommen auf meiner Seite</h1>
           </div>
+          <div class="mt-1 ml-6">
+            <h2 class="text-no-bold">
+              Schaue hier deinen aktuellen Stundenplan an!
+            </h2>
+          </div>
         </div>
       </div>
 
       <!--Regristierung-->
-      <div id="register" class="page">
+      <div id="register" class="page ml-6 w50p">
         <h2>Registrieren</h2>
         <form id="registerForm">
-          <label for="username-reg">Benutzername:</label>
-          <input
-            type="text"
-            id="username-reg"
-            name="username"
-            required
-            minlength="3"
-          />
+          <div class="d-flex fd-c">
+            <div class="d-flex fd-c">
+              <label for="username-reg">Benutzername:</label>
+              <input
+                type="text"
+                id="username-reg"
+                name="username-reg"
+                required
+                minlength="3"
+                class="mt-1 input"
+              />
+            </div>
 
-          <label for="password-reg">Passwort:</label>
-          <input type="password" id="password-reg" name="password" required />
-          <small id="passwordErrorMessage" style="color: red"></small>
+            <div class="d-flex fd-c mt-2">
+              <label for="password-reg">Passwort:</label>
+              <input
+                type="password"
+                id="password-reg"
+                name="password-reg"
+                class="mt-1 input"
+                required
+              />
+              <small id="passwordErrorMessage" style="color: red"></small>
+            </div>
 
-          <input type="submit" value="Registrieren" />
+            <input class="mt-2" type="submit" value="Registrieren" />
+          </div>
         </form>
       </div>
 
       <!--Login-->
-      <div id="login" class="page">
+      <div id="login" class="page ml-6 mr-6 w50p">
         <h2>Login</h2>
-        <form>
-          <label for="username-log">Benutzername:</label>
-          <input type="text" id="username-log" name="username" required />
+        <form id="loginForm">
+          <div class="d-flex fd-c">
+            <div class="d-flex fd-c">
+              <label for="username-log">Benutzername:</label>
+              <input
+                type="text"
+                id="username-log"
+                name="username-log"
+                class="mt-1 input"
+                required
+              />
+            </div>
 
-          <label for="password-log">Passwort:</label>
-          <input type="password" id="password-log" name="password" required />
+            <div class="d-flex fd-c mt-2">
+              <label for="password-log">Passwort:</label>
+              <input
+                type="password"
+                id="password-log"
+                name="password-log"
+                class="mt-1 input"
+                required
+              />
+            </div>
 
-          <input type="submit" value="Einloggen" />
+            <input class="mt-2" type="submit" value="Einloggen" />
+          </div>
         </form>
       </div>
 
@@ -99,130 +153,10 @@
               </div>
             </div>
           </div>
-          <script>
-            const toggleDropdown = () => {
-              let dropdownContent = document.getElementById('dropdown');
-
-              if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
-              } else {
-                dropdownContent.style.display = 'block';
-                fetchOptions('fach');
-              }
-            };
-
-            const toggleDropdownClass = () => {
-              let dropdownContent = document.getElementById('dropdown-class');
-
-              if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
-              } else {
-                dropdownContent.style.display = 'block';
-                fetchOptions('class');
-              }
-            };
-
-            const fetchOptions = (type) => {
-              if (type === 'fach') {
-                fetch('http://localhost:8080/getFachrichtungen')
-                  .then((response) => response.json())
-                  .then((data) => {
-                    let dropdownOptions = '';
-                    data.result.forEach((option) => {
-                      dropdownOptions +=
-                        '<option value="' +
-                        option.id +
-                        '" onclick="selectOption(this)">' +
-                        option.fachrichtung +
-                        '</option>';
-                    });
-                    document.getElementById('dropdown').innerHTML +=
-                      dropdownOptions;
-                  })
-                  .catch((error) => console.error('Error:', error));
-              } else {
-                let selectedFachrichtung =
-                  document.getElementById('selected-option').innerText;
-                fetch(
-                  `http://localhost:8080/getClass?fachrichtung=${selectedFachrichtung}`
-                )
-                  .then((res) => res.json())
-                  .then((data) => {
-                    let dropdownOptions = '';
-                    data.result.forEach((option) => {
-                      dropdownOptions +=
-                        '<option value="' +
-                        option.id +
-                        '" onclick="showPlan(this)">' +
-                        option.class +
-                        '</option>';
-                    });
-                    document.getElementById('dropdown-class').innerHTML +=
-                      dropdownOptions;
-                  })
-                  .catch((error) => console.log('Error:', error));
-              }
-            };
-
-            const selectOption = (option) => {
-              clearDropdown();
-
-              fetch(
-                `http://localhost:8080/getClass?fachrichtung=${option.innerHTML}`
-              )
-                .then((res) => res.json())
-                .then((data) => {
-                  let dropdownOptions = '';
-                  data.result.forEach((option) => {
-                    dropdownOptions +=
-                      '<option value="' +
-                      option.id +
-                      '" onclick="showPlan(this)">' +
-                      option.class +
-                      '</option>';
-                  });
-                  document.getElementById('dropdown-class').innerHTML +=
-                    dropdownOptions;
-                })
-                .catch((error) => console.log('Error:', error));
-
-              let tables = document.getElementsByClassName('stundenplan-table');
-              for (let i = 0; i < tables.length; i++) {
-                tables[i].closest('.klasse').style.display = 'none';
-              }
-
-              let classDropdown = document.getElementById('class-dropdown');
-              let selectedValue = option.value;
-              let selectedLabel = option.innerHTML;
-              if (selectedLabel) {
-                classDropdown.style.display = 'block';
-              }
-              document.getElementById('selected-option').innerHTML =
-                selectedLabel;
-              toggleDropdown();
-            };
-
-            const filterOptions = () => {
-              let input, filter, options, i;
-              input = document.getElementsByClassName('search-input')[0];
-              filter = input.value.toUpperCase();
-              options = document
-                .getElementById('dropdown')
-                .getElementsByTagName('option');
-
-              for (i = 0; i < options.length; i++) {
-                if (options[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-                  options[i].style.display = '';
-                } else {
-                  options[i].style.display = 'none';
-                }
-              }
-            };
-          </script>
         </div>
       </div>
     </div>
-    <div>
+    <div class="d-flex f-jc mt-3">
       <table class="stundenplan" id="plans">
         <tbody>
           <tr class="klasse" id="AA21a-plan">
@@ -11659,6 +11593,10 @@
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="footer w100p text-align-center pt-2">
+      Stundenplan Viewer LB2
     </div>
 
     <script src="app.js" type="module"></script>
